@@ -1,0 +1,39 @@
+# python 缓存文件
+*.py[cod]
+
+# C 拓展名
+*.so
+
+# 包
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# 安装日志
+pip-log.txt
+
+# 单元测试／覆盖率报告
+.coverage
+.tox
+nosetests.xml
+tmp
+
+# 翻译
+*.mo
+
+# SQLite 数据库
+*.sqlite
+
+# 虚拟环境
+venv
