@@ -1,11 +1,11 @@
-Dear {{ user.username }},
+亲爱的 {{ user.username }},
 
-To confirm your new email address click on the following link:
+请点击该链接以验证你的新邮箱地址：
 
-{{ url_for('auth.change_email', token=token, _external=True) }}
+{{ url_for('auth.confirm', token=token, _external=True) }}
 
-Sincerely,
+真诚的问候,
 
-The Flasky Team
+Flasky 团队
 
-Note: replies to this email address are not monitored.
+提示: 回复该邮箱将不会的到任何答复！

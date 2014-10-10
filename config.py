@@ -1,4 +1,4 @@
-# -*- coding=utf-8 -*-
+# -*- coding:utf-8 -*-
 
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -9,19 +9,18 @@ class Config:
     SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_RECORD_QUERIES = True
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
+    MAIL_SERVER = 'smtp.126.com'
+    MAIL_PORT = 25
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
-    FLASKY_MAIL_SENDER = u'Flasky 管理员 <flasky@example.com>'
+    FLASKY_MAIL_SENDER = u'Flasky 管理员 <hellckt@126.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50
     FLASKY_COMMENTS_PER_PAGE = 30
     FLASKY_SLOW_DB_QUERY_TIME=0.5
-    BOOTSTRAP_SERVE_LOCAL = True
 
     @staticmethod
     def init_app(app):
@@ -62,7 +61,7 @@ class ProductionConfig(Config):
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.FLASKY_MAIL_SENDER,
             toaddrs=[cls.FLASKY_ADMIN],
-            subject=cls.FLASKY_MAIL_SUBJECT_PREFIX + u'应用出错',
+            subject=cls.FLASKY_MAIL_SUBJECT_PREFIX + u' 应用错误',
             credentials=credentials,
             secure=secure)
         mail_handler.setLevel(logging.ERROR)
@@ -88,25 +87,11 @@ class HerokuConfig(ProductionConfig):
         app.logger.addHandler(file_handler)
 
 
-class UnixConfig(ProductionConfig):
-    @classmethod
-    def init_app(cls, app):
-        ProductionConfig.init_app(app)
-
-        # log to syslog
-        import logging
-        from logging.handlers import SysLogHandler
-        syslog_handler = SysLogHandler()
-        syslog_handler.setLevel(logging.WARNING)
-        app.logger.addHandler(syslog_handler)
-
-
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
     'heroku': HerokuConfig,
-    'unix': UnixConfig,
 
     'default': DevelopmentConfig
 }

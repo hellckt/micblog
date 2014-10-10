@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from datetime import datetime
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,11 +13,21 @@ from . import db, login_manager
 
 
 class Permission:
-    FOLLOW = 0x01
-    COMMENT = 0x02
-    WRITE_ARTICLES = 0x04
-    MODERATE_COMMENTS = 0x08
-    ADMINISTER = 0x80
+    """权限常量
+    0b00000001 == 0x01
+    0b00000010 == 0x02
+    0b00000100 == 0x04
+    0b00001000 == 0x08
+    0b00010000 == 0x10
+    0b00100000 == 0x20
+    0b01000000 == 0x40
+    0b10000000 == 0x80
+    """
+    FOLLOW = 0x01  # 关注
+    COMMENT = 0x02  # 评论
+    WRITE_ARTICLES = 0x04  # 写文章
+    MODERATE_COMMENTS = 0x08  # 审核评论
+    ADMINISTER = 0x80  # 管理员
 
 
 class Role(db.Model):

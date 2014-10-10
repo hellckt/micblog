@@ -1,6 +1,5 @@
-# -*- coding=utf-8 -*-
+#-*- coding:utf-8 -*-
 #!/usr/bin/env python
-
 import os
 COV = None
 if os.environ.get('FLASK_COVERAGE'):
@@ -9,7 +8,7 @@ if os.environ.get('FLASK_COVERAGE'):
     COV.start()
 
 if os.path.exists('.env'):
-    print('从 .env 中导入环境变量...')
+    print("从 .env 导入环境变量")
     for line in open('.env'):
         var = line.strip().split('=')
         if len(var) == 2:
@@ -34,7 +33,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def test(coverage=False):
-    """运行单元测试。"""
+    """Run the unit tests."""
     if coverage and not os.environ.get('FLASK_COVERAGE'):
         import sys
         os.environ['FLASK_COVERAGE'] = '1'
@@ -45,18 +44,18 @@ def test(coverage=False):
     if COV:
         COV.stop()
         COV.save()
-        print(u'Coverage 汇总:')
+        print('Coverage Summary:')
         COV.report()
         basedir = os.path.abspath(os.path.dirname(__file__))
         covdir = os.path.join(basedir, 'tmp/coverage')
         COV.html_report(directory=covdir)
-        print(u'HTML 版本: file://%s/index.html' % covdir)
+        print('HTML version: file://%s/index.html' % covdir)
         COV.erase()
 
 
 @manager.command
 def profile(length=25, profile_dir=None):
-    """在 code profiler 下运行应用。"""
+    """Start the application under the code profiler."""
     from werkzeug.contrib.profiler import ProfilerMiddleware
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length],
                                       profile_dir=profile_dir)
@@ -65,7 +64,7 @@ def profile(length=25, profile_dir=None):
 
 @manager.command
 def deploy():
-    """执行拓展任务。"""
+    """Run deployment tasks."""
     from flask.ext.migrate import upgrade
     from app.models import Role, User
 
